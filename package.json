@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LouiseBalbi/hotel-app-console.git"
@@ -18,7 +17,8 @@
   "bugs": {
     "url": "https://github.com/LouiseBalbi/hotel-app-console/issues"
   },
-  "homepage": "https://github.com/LouiseBalbi/hotel-app-console#readme"
-
-  
+  "homepage": "https://github.com/LouiseBalbi/hotel-app-console#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
 }
