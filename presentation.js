@@ -1,35 +1,57 @@
-function start() {
-  console.log("1. Lister les clients");
-  console.log("99. Sortir");
-
-  // récupération du module `readline`
 var readline = require('readline');
-// création d'un objet `rl` permettant de récupérer la saisie utilisateur
-var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-// récupération de la saisie utilisateur
-rl.question('Saisir un nombre : ', function(saisie) {
-  
-  if(saisie == '1'){
-    console.log('>> liste des clients');
-    start();
-    //require('./index');
-  } else if(saisie =='99'){
-    console.log('Aurevoir')
-    rl.close();
-  } else{
-    console.log('Veuillez choisir un champ correct')  
-    rl.close();
-  }
+var service = require("./service.js");
 
+// création d'un objet `rep` permettant de récupérer la saisie utilisateur
+var rep = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
 });
+
+function start() {
+
+    console.log("Menu");
+    console.log("1. Lister les clients");
+    console.log("2. Ajouter un client");
+    console.log("3. Recherche un client par nom");
+    console.log("4. Vérifier la disponibilité d'une chambre");
+    console.log("99. Sortir");
+
+    rep.question('Saisissez un nombre :', function (saisie) {
+
+        switch (saisie) {
+            case "1":
+                console.log('>> Liste des Clients')
+                service.listerClients(
+                    function (listerClients) {
+                        console.log(
+                            listerClients
+                                .map(function (client) {
+                                    return client.nom + ' ' + client.prenoms
+                                })
+                                .join('\n')
+                        );
+                        start();
+                    }, function (err) {
+                        console.log('erreur');
+                        start();
+                    });
+                break;
+
+            // case "2":
+            //     break;
+            case "99":
+                console.log("Aurevoir.")
+                rep.close();
+                this.process.exit(); // Met fin au programme
+                break;
+              default :
+                  console.log('Veuillez saisir un champ correct')
+                  start();
+        }
+
+    }
+    );
 
 }
 
 exports.start = start;
-
-
-
-
