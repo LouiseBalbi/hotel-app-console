@@ -1,16 +1,35 @@
-var request = require('request');
+//var request = require('request');
 
-function listerClients(callbackOK, callbackKO) {
+class Service {
 
-    request('https://hotelwebapi.herokuapp.com/clients?start=0&size=3', { json: true }, function(err, res, listeDeClients) {
-      if (err) {
-        callbackKO(err);
-    } else {
-        callbackOK(listeDeClients);
+    constructor() {
+        this.request = require('request-promise-native');
     }
 
-});
+
+        listerClients() {
+
+    return this.request.get('https://hotelwebapi.herokuapp.com/clients?start=0&size=3', { json: true});
+}
+
+findByName(nomAChercher) {
+    return this.request.get(`https://hotelwebapi.herokuapp.com/clients/nom=${nomAChercher}`, { json: true });
+}
+
+posterClient(saisieNom, saisiePrenom) {
+    return this.request.post({
+        url: 'https://hotelwebapi.herokuapp.com/clients',
+        method: 'POST',
+        json: {
+            nom: saisieNom,
+            prenoms: saisiePrenom
+        }
+    });
+}
 
 }
 
-exports.listerClients = listerClients;
+
+module.exports = { Service };
+//exports.listerClients = listerClients;
+//exports.ajouterClient = ajouterClients;
