@@ -1,7 +1,10 @@
 import { Service } from "./service";
+import readline from 'readline';
+import { Client } from './domains';
 
-const readline = require('readline');
+//const readline = require('readline');
 
+const monService = new Service();
 
 // création d'un objet `rep` permettant de récupérer la saisie utilisateur
 const rl = readline.createInterface({
@@ -13,7 +16,7 @@ export class Presentation {
 
     monService: Service;
 
-    constructor(service:any) {
+    constructor(service: Service) {
         this.monService = service;
     }
 
@@ -27,18 +30,18 @@ export class Presentation {
     console.log("4. Vérifier la disponibilité d'une chambre");
     console.log("99. Sortir");
 
-    rl.question('Saisissez un nombre :', (saisie: any) => {
+    rl.question('Saisissez un nombre :', (saisie: string) => {
 
         switch (saisie) {
             case "1":
                 console.log('>> Liste des Clients')
-                this.monService.listerClients()
-                .then((listClients: any[]) => console.log(
+                monService.listerClients()
+                .then(listClients => console.log(
                     listClients
-                        .map(client => `${client.nom} ${client.prenoms}`)
+                        .map(client => client.toString())
                         .join('\n')
                 ))
-                .catch((err: any) => console.log(err))
+                .catch((err: string) => console.log(err))
                 .finally(() => {
                     console.log("\r");
                     this.start();
@@ -51,7 +54,7 @@ export class Presentation {
                 rl.question("Entrez un Nom : ", (saisieNom: string) => {
                     rl.question("Entrez un Prenom : ", (saisiePrenom: string) => {
                         this.monService.posterClient(saisieNom, saisiePrenom)
-                            .then(console.log(`${saisieNom} ${saisiePrenom} a été ajouté !`))
+                            .then(() => console.log(`${saisieNom} ${saisiePrenom} a été ajouté !`))
                             .catch((err: any) => console.log(err))
                             .finally(() => {
                                 console.log("\r");
@@ -63,21 +66,23 @@ export class Presentation {
                 break;
 
                 // revoir côté java
-            // case "3":
-            //     console.log("\n>> Rechercher un client par nom\n");
+                // case "3":
+                //     console.log("\n>> Rechercher un client par nom\n");
 
-            //     rl.question("Entrez le Nom à chercher: ", saisieNom => {
-            //         this.monService.findByName(saisieNom)
-            //             .then(clients => console.log(clients))
-            //             .catch(err => console.log(err))
-            //             .finally(() => {
-            //                 console.log("\r");
-            //                 this.start();
-            //             })
-            //     })
-            //     break;
-
-
+                //     rl.question("Entrez le Nom à chercher: ", (saisieNom: string) => {
+                //         monService.findByName(saisieNom)
+                //             .then((clients: Client[]) => console.log(
+                //                 clients
+                //                     .map(client => client.toString())
+                //                     .join('\n')
+                //             ))
+                //             .catch((err: string) => console.log(err))
+                //             .finally(() => {
+                //                 console.log("\r");
+                //                 this.start();
+                //             })
+                //     })
+                //     break;
 
             case "99":
                 console.log("Aurevoir.")
