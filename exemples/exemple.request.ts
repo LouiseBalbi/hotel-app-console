@@ -10,8 +10,8 @@ var request = require('request');
 // body -> corps de la réponse
 // L'option { json: true } permet d'obtenir un objet JavaScript dans body (au lieu
 //d'une chaîne de caractères).
-request('https://jsonplaceholder.typicode.com/posts', { json: true }, function(err,
-res, body) {
+request('https://jsonplaceholder.typicode.com/posts', { json: true }, function(err: any,
+res: any, body: any) {
   if (err) { return console.log('Erreur', err); }
   // body contient les données récupérées
   console.log('Ok', body);

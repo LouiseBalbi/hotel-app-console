@@ -1,6 +1,8 @@
 //var request = require('request');
 
-class Service {
+export class Service {
+    
+    request: any;
 
     constructor() {
         this.request = require('request-promise-native');
@@ -12,11 +14,11 @@ class Service {
     return this.request.get('https://hotelwebapi.herokuapp.com/clients?start=0&size=3', { json: true});
 }
 
-findByName(nomAChercher) {
+findByName(nomAChercher:string) {
     return this.request.get(`https://hotelwebapi.herokuapp.com/clients/nom=${nomAChercher}`, { json: true });
 }
 
-posterClient(saisieNom, saisiePrenom) {
+posterClient(saisieNom:string, saisiePrenom:string) {
     return this.request.post({
         url: 'https://hotelwebapi.herokuapp.com/clients',
         method: 'POST',
@@ -30,6 +32,5 @@ posterClient(saisieNom, saisiePrenom) {
 }
 
 
-module.exports = { Service };
-//exports.listerClients = listerClients;
-//exports.ajouterClient = ajouterClients;
+//module.exports = { Service };
+

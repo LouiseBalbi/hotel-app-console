@@ -1,5 +1,7 @@
+import { Service } from "./service";
+
 const readline = require('readline');
-//var service = require("./service.js");
+
 
 // création d'un objet `rep` permettant de récupérer la saisie utilisateur
 const rl = readline.createInterface({
@@ -7,10 +9,11 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-class Presentation {
+export class Presentation {
 
+    monService: Service;
 
-    constructor(service) {
+    constructor(service:any) {
         this.monService = service;
     }
 
@@ -24,18 +27,18 @@ class Presentation {
     console.log("4. Vérifier la disponibilité d'une chambre");
     console.log("99. Sortir");
 
-    rl.question('Saisissez un nombre :', saisie => {
+    rl.question('Saisissez un nombre :', (saisie: any) => {
 
         switch (saisie) {
             case "1":
                 console.log('>> Liste des Clients')
                 this.monService.listerClients()
-                .then(listClients => console.log(
+                .then((listClients: any[]) => console.log(
                     listClients
                         .map(client => `${client.nom} ${client.prenoms}`)
                         .join('\n')
                 ))
-                .catch(err => console.log(err))
+                .catch((err: any) => console.log(err))
                 .finally(() => {
                     console.log("\r");
                     this.start();
@@ -45,11 +48,11 @@ class Presentation {
 
             case "2":
                 console.log("\n>> Ajouter un client\n");
-                rl.question("Entrez un Nom : ", saisieNom => {
-                    rl.question("Entrez un Prenom : ", saisiePrenom => {
+                rl.question("Entrez un Nom : ", (saisieNom: string) => {
+                    rl.question("Entrez un Prenom : ", (saisiePrenom: string) => {
                         this.monService.posterClient(saisieNom, saisiePrenom)
                             .then(console.log(`${saisieNom} ${saisiePrenom} a été ajouté !`))
-                            .catch(err => console.log(err))
+                            .catch((err: any) => console.log(err))
                             .finally(() => {
                                 console.log("\r");
                                 this.start();
@@ -92,5 +95,5 @@ class Presentation {
 }
 }
 
-//exports.start = start;
-module.exports = { Presentation };
+
+//module.exports = { Presentation };
